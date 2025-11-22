@@ -1,0 +1,1432 @@
+/* styles.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-navy: #1e3a8a;
+    --dark-navy: #172554;
+    --light-navy: #3b82f6;
+    --accent-blue: #60a5fa;
+    --background: #f8fafc;
+    --surface: #ffffff;
+    --surface-hover: #f1f5f9;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border: #e2e8f0;
+    --success: #22c55e;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* background: linear-gradient(135deg, var(--background) 0%, #e0f2fe 100%); */
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    /* background: var(--surface); */
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* background: linear-gradient(135deg, var(--primary-navy) 0%, var(--light-navy) 100%); */
+    background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe6e 100%);
+    /* opacity: 0.05; */
+    z-index: 0;
+}
+
+.title {
+    position: relative;
+    z-index: 1;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-shadow: 0 2px 4px rgba(30, 58, 138, 0.1);
+}
+
+.title .material-icons {
+    font-size: 3rem;
+    color: var(--light-navy);
+    filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
+    animation: pulse 2s infinite;
+}
+
+.subtitle {
+    position: relative;
+    z-index: 1;
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Category Styles */
+.category {
+    /* background: var(--surface); */
+    background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe6e 100%);
+    border-left: 5px solid #224499;
+    border-radius: 16px;
+    margin-bottom: 3rem;
+    box-shadow: var(--shadow);
+    /* border: 1px solid var(--border); */
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.category:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.category-header {
+    /* background: linear-gradient(135deg, var(--primary-navy) 0%, var(--dark-navy) 100%); */
+    color: #1e3a8a;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.category-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.category:hover .category-header::before {
+    left: 100%;
+}
+
+.category-icon {
+    font-size: 2rem;
+    color: #224499;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.category-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.table-container {
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+/* Table Styles */
+.checklist-table {
+    width: 100%;
+    border-collapse: collapse;
+    /* background: var(--surface);
+    border-radius: 8px; */
+    overflow: hidden;
+}
+
+.checklist-table thead {
+    /* background: linear-gradient(135deg, var(--primary-navy) 0%, var(--light-navy) 100%);
+    color: white; */
+    color: #224499;
+    border-bottom: 2px solid;
+}
+
+.checklist-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.checklist-table tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid var(--border);
+}
+
+.checklist-table tbody tr:hover {
+    background: var(--surface-hover);
+    transform: scale(1.01);
+}
+
+.checklist-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.checklist-table td {
+    padding: 1rem;
+    border: none;
+    vertical-align: middle;
+}
+
+.checklist-table td:first-child {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Input Styles */
+input[type="number"] {
+    width: 60px;
+    padding: 0.5rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    background: var(--surface);
+    transition: all 0.3s ease;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--light-navy);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: white;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: var(--surface);
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--light-navy);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: white;
+}
+
+input[type="text"]::placeholder {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Custom Checkbox */
+input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+input[type="checkbox"]:hover {
+    border-color: var(--light-navy);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%);
+    border-color: var(--success);
+    transform: scale(1.1);
+}
+
+input[type="checkbox"]:checked::before {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Add Item Button Styles */
+.add-item-container {
+    padding: 1rem 0 0.5rem 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+}
+
+.add-item-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #224499 0%, #224499 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.add-item-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.add-item-btn:hover::before {
+    left: 100%;
+}
+
+.add-item-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+.add-item-btn:active {
+    transform: translateY(0);
+}
+
+.add-item-btn .material-icons {
+    font-size: 1.1rem;
+}
+
+/* New Item Row Animation */
+.new-item-row {
+    animation: slideInFromLeft 0.5s ease-out;
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Editable Item Name */
+.editable-item-name {
+    background: #fff3cd;
+    border: 2px dashed var(--accent-blue);
+    border-radius: 6px;
+    padding: 0.25rem 0.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: text;
+    transition: all 0.3s ease;
+}
+
+.editable-item-name:focus {
+    outline: none;
+    background: white;
+    border-color: var(--light-navy);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Delete Button for Dynamic Items */
+.delete-item-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    margin-left: 0.5rem;
+}
+
+.delete-item-btn:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+}
+
+.delete-item-btn .material-icons {
+    font-size: 16px;
+}
+
+/* Footer Styles */
+.footer {
+    /* background: var(--surface); */
+    border-left: 5px solid #224499;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    /* border: 1px solid var(--border); */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.progress-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 12px;
+    background: var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%);
+    width: 0%;
+    border-radius: 6px;
+    transition: width 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.progress-text {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.save-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary-navy) 0%, var(--light-navy) 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.save-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.save-btn:hover::before {
+    left: 100%;
+}
+
+.save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.save-btn:active {
+    transform: translateY(0);
+}
+
+.save-btn .material-icons {
+    font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        padding: 1.5rem 1rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .checklist-table {
+        min-width: 700px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem 0.5rem;
+    }
+
+    .header {
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .title .material-icons {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .category {
+        margin-bottom: 1.5rem;
+        border-radius: 12px;
+    }
+
+    .category-header {
+        padding: 1.25rem 1rem;
+        gap: 0.75rem;
+    }
+
+    .category-title {
+        font-size: 1.25rem;
+    }
+
+    .category-icon {
+        font-size: 1.75rem;
+    }
+
+    .table-container {
+        padding: 0.75rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .checklist-table {
+        min-width: 470px;
+        font-size: 0.85rem;
+    }
+
+    .checklist-table th {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.75rem;
+        white-space: nowrap;
+    }
+
+    .checklist-table td {
+        padding: 0.75rem 0.5rem;
+        white-space: nowrap;
+    }
+
+    .checklist-table td:first-child {
+        min-width: 140px;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    .checklist-table td:last-child {
+        min-width: 120px;
+    }
+
+    input[type="number"] {
+        width: 50px;
+        padding: 0.4rem;
+        font-size: 0.8rem;
+    }
+
+    input[type="text"] {
+        min-width: 100px;
+        padding: 0.4rem;
+        font-size: 0.8rem;
+    }
+
+    input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .progress-container {
+        width: 100%;
+        gap: 0.75rem;
+    }
+
+    .progress-bar {
+        height: 10px;
+    }
+
+    .progress-text {
+        font-size: 0.85rem;
+    }
+
+    .save-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 1rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0.75rem 0.25rem;
+    }
+
+    .header {
+        padding: 1.5rem 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .title .material-icons {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .category {
+        margin-bottom: 1rem;
+        border-radius: 8px;
+    }
+
+    .category-header {
+        padding: 1rem 0.75rem;
+        flex-direction: row;
+        text-align: left;
+        gap: 0.5rem;
+    }
+
+    .category-title {
+        font-size: 1.1rem;
+    }
+
+    .category-icon {
+        font-size: 1.5rem;
+    }
+
+    .table-container {
+        padding: 0.5rem;
+    }
+
+    .checklist-table {
+        min-width: 500px;
+        font-size: 0.8rem;
+    }
+
+    .checklist-table th {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.7rem;
+    }
+
+    .checklist-table td {
+        padding: 0.5rem 0.25rem;
+    }
+
+    .checklist-table td:first-child {
+        min-width: 120px;
+        font-size: 0.75rem;
+    }
+
+    .checklist-table td:last-child {
+        min-width: 100px;
+    }
+
+    input[type="number"] {
+        width: 45px;
+        padding: 0.3rem;
+        font-size: 0.75rem;
+    }
+
+    input[type="text"] {
+        min-width: 80px;
+        padding: 0.3rem;
+        font-size: 0.75rem;
+    }
+
+    input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+    }
+
+    input[type="checkbox"]:checked::before {
+        font-size: 10px;
+    }
+
+    .footer {
+        padding: 1rem 0.75rem;
+        gap: 1rem;
+    }
+
+    .progress-container {
+        gap: 0.5rem;
+    }
+
+    .progress-bar {
+        height: 8px;
+    }
+
+    .progress-text {
+        font-size: 0.8rem;
+    }
+
+    .save-btn {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .add-item-btn {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.85rem;
+    }
+
+    .add-item-btn .material-icons {
+        font-size: 1rem;
+    }
+
+    .delete-item-btn {
+        width: 20px;
+        height: 20px;
+    }
+
+    .delete-item-btn .material-icons {
+        font-size: 14px;
+    }
+}
+
+/* Landscape orientation for small devices */
+@media (max-width: 768px) and (orientation: landscape) {
+    .header {
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .category-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .footer {
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .progress-container {
+        width: auto;
+        flex: 1;
+    }
+
+    .save-btn {
+        width: auto;
+        white-space: nowrap;
+    }
+}
+
+/* Ultra small screens */
+@media (max-width: 320px) {
+    .checklist-table {
+        min-width: 450px;
+    }
+
+    .checklist-table th,
+    .checklist-table td {
+        padding: 0.4rem 0.2rem;
+    }
+
+    .checklist-table td:first-child {
+        min-width: 100px;
+    }
+
+    input[type="number"] {
+        width: 40px;
+    }
+
+    input[type="text"] {
+        min-width: 70px;
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .header::before,
+    .category-header::before,
+    .save-btn::before,
+    .progress-fill::before {
+        display: none;
+    }
+
+    .footer {
+        display: none;
+    }
+
+    .category {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 1rem;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    .category-header {
+        background: #f5f5f5 !important;
+        color: black !important;
+    }
+
+    .checklist-table {
+        font-size: 0.8rem;
+    }
+
+    .checklist-table th {
+        background: #f0f0f0 !important;
+        color: black !important;
+    }
+}
+
+
+.icone_promova {
+    width: 10%;
+    border-radius: 20%;
+}
+
+
+/* HEADER ADICIONAL */
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.user-name {
+    color: #333;
+    font-weight: bolder;
+    border-bottom: 2px solid #224499;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #ff4757;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.logout-btn:hover {
+    color: #ff3838;
+}
+
+
+
+/* INPUTS NOME E DATA */
+
+.wrap {
+    padding: 28px 20px;
+    position: relative;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    flex-wrap: wrap;
+}
+
+/* Campo de texto com linha pontilhada */
+.input-line {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    min-width: 220px;
+}
+
+.input-line label {
+    color: var(--text);
+    font-weight: bolder;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+
+/* Campo de data */
+.date-input {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 210px;
+}
+
+.date-input label{
+    font-weight: bolder;
+}
+
+.date-input input {
+    /* border:none;
+      outline:none;
+      border-bottom:2px dotted var(--dots);
+      width:160px;
+      font:inherit;
+      background:transparent;
+      padding:2px 4px; */
+    text-align: center;
+}
+
+/* Placeholders */
+.input-line input::placeholder,
+.date-input input::placeholder {
+    color: var(--text);
+}
+
+/* impressão limpa */
+@media print {
+    body {
+        background: #fff
+    }
+
+    .wrap {
+        padding: 0
+    }
+}
+
+
+
+
+/* //////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+/* ESTILOS PARA FUNÇÃO DE RESET - ADICIONAR AO FINAL DO SEU checklist.css */
+
+/* Botão de Reset */
+.reset-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.reset-btn:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+.reset-btn:active {
+    transform: translateY(0);
+}
+
+.reset-btn .material-icons {
+    font-size: 1.1rem;
+}
+
+/* Modal de Confirmação */
+.reset-confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.reset-confirmation-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.reset-confirmation-modal {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: translateY(30px) scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.reset-confirmation-overlay.active .reset-confirmation-modal {
+    transform: translateY(0) scale(1);
+}
+
+.reset-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.reset-icon .material-icons {
+    font-size: 2rem;
+    color: white;
+}
+
+.reset-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.reset-message {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.reset-message strong {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.reset-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn-reset-cancel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-reset-cancel:hover {
+    background: #cbd5e0;
+    transform: translateY(-1px);
+}
+
+.btn-reset-confirm {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-reset-confirm:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    transform: translateY(-1px);
+}
+
+/* Modal de Loading */
+.reset-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.reset-loading-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.reset-loading-modal {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.reset-loading-spinner {
+    margin-bottom: 1rem;
+}
+
+.reset-loading-spinner .material-icons {
+    font-size: 3rem;
+    color: #ef4444;
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.reset-loading-modal p {
+    color: #64748b;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Animação de Reset na Barra de Progresso */
+.reset-animation {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    animation: resetPulse 0.5s ease-in-out;
+}
+
+@keyframes resetPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: scaleY(1.1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+
+    .reset-btn {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.85rem;
+    }
+
+    .reset-confirmation-modal {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .reset-actions {
+        flex-direction: column;
+    }
+
+    .btn-reset-cancel,
+    .btn-reset-confirm {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .reset-loading-modal {
+        margin: 1rem;
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .row {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+        flex-wrap: wrap;
+    }
+
+    .icone_promova {
+        width: 25%;
+    }
+
+    .reset-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .reset-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .reset-icon .material-icons {
+        font-size: 1.75rem;
+    }
+
+    .reset-title {
+        font-size: 1.25rem;
+    }
+
+    .reset-message {
+        font-size: 0.9rem;
+    }
+}
+
+
+
+
+
+/* ===== FUNÇÃO 1: REMOVER BORDA AMARELA AO FINALIZAR EDIÇÃO ===== */
+
+.editable-item-name {
+    background: #fff3cd;
+    border: 2px dashed var(--accent-blue);
+    border-radius: 6px;
+    padding: 0.25rem 0.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: text;
+    transition: all 0.3s ease;
+}
+
+.editable-item-name:focus {
+    outline: none;
+    background: white;
+    border-color: var(--light-navy);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Estado finalizado - sem borda amarela */
+.editable-item-name.finalized {
+    background: transparent;
+    border: none;
+    padding: 0.25rem 0;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.editable-item-name.finalized:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    cursor: text;
+}
+
+/* ===== FUNÇÃO 2: DRAG & DROP PARA REORDENAÇÃO ===== */
+
+.drag-handle {
+    display: none;
+    cursor: grab;
+    color: #64748b;
+    font-size: 16px;
+    padding: 4px;
+    margin-right: 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.drag-handle:hover {
+    background: rgba(100, 116, 139, 0.1);
+    color: var(--light-navy);
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+/* Mostrar handle no hover da linha */
+.checklist-table tbody tr:hover .drag-handle {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Linha sendo arrastada */
+.dragging {
+    opacity: 0.5;
+    background: rgba(59, 130, 246, 0.1);
+    transform: rotate(2deg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Indicador de posição de drop */
+.drop-indicator {
+    height: 2px;
+    background: var(--light-navy);
+    margin: 2px 0;
+    border-radius: 1px;
+    animation: dropPulse 0.5s ease-in-out infinite;
+}
+
+@keyframes dropPulse {
+    0%, 100% {
+        background: var(--light-navy);
+        opacity: 0.6;
+    }
+    50% {
+        background: var(--accent-blue);
+        opacity: 1;
+    }
+}
+
+/* Área de drop válida */
+.drop-zone {
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px dashed var(--accent-blue);
+}
+
+/* Melhorar visual da primeira coluna para acomodar o handle */
+.checklist-table td:first-child {
+    font-weight: 500;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+}
+
+.item-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Responsivo para mobile */
+@media (max-width: 768px) {
+    .drag-handle {
+        display: inline-flex !important;
+        font-size: 14px;
+        padding: 2px;
+        margin-right: 4px;
+    }
+    
+    .checklist-table td:first-child {
+        min-height: 35px;
+    }
+}
