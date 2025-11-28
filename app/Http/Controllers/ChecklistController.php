@@ -59,17 +59,14 @@ class ChecklistController extends Controller
                 'user_id' => Auth::id(),
                 'job_name' => $validated['job_name'],
                 'job_date' => $dateForDatabase,
-                'checklist_data' => json_encode($validated['checklist_data']),
+                'checklist_data' => $validated['checklist_data'], // Laravel faz o json_encode automaticamente via cast
                 'is_completed' => $validated['is_completed'],
                 'completed_at' => $validated['is_completed'] ? now() : null,
             ]);
 
-            // Só gera PDF se estiver completo
-            $pdfPath = null;
-            if ($validated['is_completed']) {
-                $pdfPath = $this->generatePDF($checklist);
-                $checklist->update(['pdf_path' => $pdfPath]);
-            }
+            // Sempre gera PDF (concluído ou não)
+            $pdfPath = $this->generatePDF($checklist);
+            $checklist->update(['pdf_path' => $pdfPath]);
 
             return response()->json([
                 'success' => true,
@@ -77,7 +74,7 @@ class ChecklistController extends Controller
                     ? 'Checklist concluído e salvo com sucesso!'
                     : 'Checklist salvo com sucesso!',
                 'checklist_id' => $checklist->id,
-                'pdf_url' => $pdfPath ? route('checklist.download', $checklist->id) : null,
+                'pdf_url' => route('checklist.download', $checklist->id),
             ]);
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -100,7 +97,8 @@ class ChecklistController extends Controller
     public function edit($id)
     {
         $checklist = Checklist::where('user_id', Auth::id())->findOrFail($id);
-        $checklistData = json_decode($checklist->checklist_data, true) ?? [];
+        // O cast 'array' no Model já converte automaticamente, não precisa de json_decode
+        $checklistData = $checklist->checklist_data ?? [];
 
         return view('checklist.edit', compact('checklist', 'checklistData'));
     }
@@ -122,16 +120,14 @@ class ChecklistController extends Controller
             $checklist->update([
                 'job_name' => $validated['job_name'],
                 'job_date' => $jobDate,
-                'checklist_data' => json_encode($validated['checklist_data']),
+                'checklist_data' => $validated['checklist_data'], // Laravel faz o json_encode automaticamente via cast
                 'is_completed' => $validated['is_completed'],
                 'completed_at' => $validated['is_completed'] ? now() : null,
             ]);
 
-            $pdfPath = null;
-            if ($validated['is_completed']) {
-                $pdfPath = $this->generatePDF($checklist);
-                $checklist->update(['pdf_path' => $pdfPath]);
-            }
+            // Sempre gera PDF (concluído ou não)
+            $pdfPath = $this->generatePDF($checklist);
+            $checklist->update(['pdf_path' => $pdfPath]);
 
             return response()->json([
                 'success' => true,
@@ -139,7 +135,7 @@ class ChecklistController extends Controller
                     ? 'Checklist atualizado e concluído com sucesso!'
                     : 'Checklist atualizado com sucesso!',
                 'checklist_id' => $checklist->id,
-                'pdf_url' => $pdfPath ? route('checklist.download', $checklist->id) : null,
+                'pdf_url' => route('checklist.download', $checklist->id),
             ]);
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
@@ -264,6 +260,7 @@ class ChecklistController extends Controller
     {
         try {
             $checklist = Checklist::where('user_id', Auth::id())->findOrFail($id);
+
 
             if (! $checklist->pdf_path) {
                 return back()->with('error', 'PDF não encontrado');

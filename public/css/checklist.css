@@ -1339,6 +1339,19 @@ input[type="checkbox"]:checked::before {
     cursor: text;
 }
 
+/* Placeholder para campo vazio */
+.editable-item-name:empty::before,
+.editable-item-name.placeholder-visible::before {
+    content: attr(data-placeholder);
+    color: #999;
+    font-style: italic;
+    pointer-events: none;
+}
+
+.editable-item-name:focus::before {
+    content: '';
+}
+
 /* ===== FUNÇÃO 2: DRAG & DROP PARA REORDENAÇÃO ===== */
 
 .drag-handle {

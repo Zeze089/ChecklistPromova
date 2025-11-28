@@ -486,8 +486,6 @@
 
 @section('scripts')
 
-
-
     <script>
         // Adicionar token CSRF para requisições AJAX
         window.csrfToken = '{{ csrf_token() }}';

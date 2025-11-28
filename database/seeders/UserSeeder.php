@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Administrador',
             'email' => 'suporte@promova.net',
-            'password' => Hash::make('123456'),
+            'password' => Hash::make('senha123'),
             'is_admin' => true,
         ]);
 
@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Usuário Teste',
             'email' => 'usuario@promova.com',
-            'password' => Hash::make('123456'),
+            'password' => Hash::make('senha123'),
             'is_admin' => false,
         ]);
 

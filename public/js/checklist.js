@@ -164,7 +164,7 @@ function addNewItem(button) {
     newRow.innerHTML = `
         <td>
             <div style="display: flex; align-items: center;">
-                <span class="editable-item-name" contenteditable="true" data-placeholder="Nome do item...">Novo Item</span>
+                <span class="editable-item-name" contenteditable="true" data-placeholder="Digite o nome do item..." data-is-new="true"></span>
                 <button class="delete-item-btn" onclick="removeItem(this)" title="Remover item">
                     <span class="material-icons">close</span>
                 </button>
@@ -214,14 +214,12 @@ function addNewItem(button) {
 
     // Adicionar placeholder behavior
     editableName.addEventListener('focus', function () {
-        if (this.textContent.trim() === 'Novo Item') {
-            this.textContent = '';
-        }
+        this.classList.remove('placeholder-visible');
     });
 
     editableName.addEventListener('blur', function () {
         if (this.textContent.trim() === '') {
-            this.textContent = 'Novo Item';
+            this.classList.add('placeholder-visible');
         }
     });
 
@@ -240,7 +238,6 @@ function addNewItem(button) {
     }, 150);
 
     // Atualizar progresso
-   // updateProgress();
     saveDataAutomatically();
 
     // Mostrar feedback visual
@@ -799,7 +796,8 @@ function collectChecklistData() {
                 ? editableNameElement.textContent.trim()
                 : (defaultNameElement ? defaultNameElement.textContent.trim() : '');
 
-            if (!itemName) return; // Pular linhas sem nome
+            // Pular linhas sem nome ou com placeholder
+            if (!itemName || itemName === '') return;
 
             const quantityInput = row.querySelector('input[type="number"]');
             const checkboxes = row.querySelectorAll('input[type="checkbox"]');
@@ -1116,7 +1114,7 @@ function addNewItemWithFinalization(button) {
         <td>
             <span class="material-icons drag-handle">drag_indicator</span>
             <div class="item-content">
-                <span class="editable-item-name" contenteditable="true" data-placeholder="Nome do item...">Novo Item</span>
+                <span class="editable-item-name" contenteditable="true" data-placeholder="Digite o nome do item..." data-is-new="true"></span>
                 <button class="delete-item-btn" onclick="removeItem(this)" title="Remover item">
                     <span class="material-icons">close</span>
                 </button>
@@ -1183,66 +1181,131 @@ function addNewItemWithFinalization(button) {
 
 // Configurar eventos para item editável
 function setupEditableItemEvents(editableName, row) {
+    let blurTimeout = null;
+
     // Ao focar
     editableName.addEventListener('focus', function () {
         isEditingItem = true;
-        if (this.textContent.trim() === 'Novo Item') {
-            this.textContent = '';
+        this.classList.remove('placeholder-visible');
+        // Cancelar qualquer blur pendente
+        if (blurTimeout) {
+            clearTimeout(blurTimeout);
+            blurTimeout = null;
         }
     });
 
-    // Ao sair do foco (blur)
+    // Ao sair do foco (blur) - com pequeno delay para evitar remoção acidental
     editableName.addEventListener('blur', function () {
+        const element = this;
         isEditingItem = false;
-        finalizeItemEditing(this);
+
+        // Pequeno delay para permitir que o usuário clique de volta no campo
+        blurTimeout = setTimeout(() => {
+            // Verificar se o elemento ainda existe e não está focado
+            if (document.body.contains(element) && document.activeElement !== element) {
+                finalizeItemEditing(element, row);
+            }
+        }, 200);
     });
 
     // Enter para confirmar
     editableName.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
             e.preventDefault();
-            this.blur();
+            if (blurTimeout) {
+                clearTimeout(blurTimeout);
+                blurTimeout = null;
+            }
+            finalizeItemEditing(this, row);
         }
         if (e.key === 'Escape') {
+            if (blurTimeout) {
+                clearTimeout(blurTimeout);
+                blurTimeout = null;
+            }
             this.blur();
         }
     });
 
-    // Input para salvar dados
+    // Input para salvar dados e marcar que o usuário digitou
     editableName.addEventListener('input', function () {
+        // Marcar que o usuário começou a digitar
+        this.dataset.hasInput = 'true';
         saveDataAutomatically();
     });
 }
 
 // Finalizar edição do item
-function finalizeItemEditing(editableElement) {
-    if (editableElement.textContent.trim() === '') {
-        editableElement.textContent = 'Item Sem Nome';
+function finalizeItemEditing(editableElement, row) {
+    const itemName = editableElement.textContent.trim();
+
+    // Se o campo estiver vazio
+    if (itemName === '') {
+        // Verificar se é um item novo que nunca recebeu input
+        const isNew = editableElement.dataset.isNew === 'true';
+        const hasInput = editableElement.dataset.hasInput === 'true';
+
+        // Se é novo E nunca digitou nada, apenas mostrar placeholder
+        if (isNew && !hasInput) {
+            editableElement.classList.add('placeholder-visible');
+            // NÃO marcar como não-novo ainda, dar mais chances
+            return;
+        }
+
+        // Se já digitou algo e apagou, ou tentou várias vezes
+        if (row && !isNew) {
+            // Remover a linha
+            row.style.animation = 'slideOutToRight 0.3s ease-in forwards';
+            setTimeout(() => {
+                row.remove();
+                saveDataAutomatically();
+                showNotification('Item removido (nome não pode ser vazio)', 'info');
+            }, 300);
+        } else {
+            // Mostrar placeholder e marcar como não-novo
+            editableElement.classList.add('placeholder-visible');
+            editableElement.dataset.isNew = 'false';
+        }
+        return;
     }
 
-    // Adicionar classe de finalizado
+    // Tem nome válido - adicionar classe de finalizado
     editableElement.classList.add('finalized');
+    editableElement.dataset.isNew = 'false';
+    editableElement.dataset.hasInput = 'false';
 
-    // Event listener para editar novamente ao clicar
-    editableElement.addEventListener('click', function () {
-        if (this.classList.contains('finalized')) {
-            this.classList.remove('finalized');
-            this.focus();
-            isEditingItem = true;
-        }
-    });
+    // Event listener para editar novamente ao clicar (adicionar apenas uma vez)
+    if (!editableElement.dataset.clickListenerAdded) {
+        editableElement.dataset.clickListenerAdded = 'true';
+        editableElement.addEventListener('click', function () {
+            if (this.classList.contains('finalized')) {
+                this.classList.remove('finalized');
+                this.focus();
+                isEditingItem = true;
+            }
+        });
+    }
+
+    saveDataAutomatically();
 }
 
 // Clique fora para finalizar edição
 document.addEventListener('click', function (e) {
     if (!isEditingItem) return;
 
+    // Verificar se clicou dentro de um elemento editável ou seus filhos
+    const clickedEditable = e.target.closest('.editable-item-name');
+    const clickedInRow = e.target.closest('tr.new-item-row');
+
+    // Se clicou no próprio campo editável ou dentro da linha, não fazer nada
+    if (clickedEditable || clickedInRow) {
+        return;
+    }
+
     // Se clicou fora de um elemento editável
-    if (!e.target.classList.contains('editable-item-name')) {
-        const activeEditable = document.querySelector('.editable-item-name:focus');
-        if (activeEditable) {
-            activeEditable.blur();
-        }
+    const activeEditable = document.querySelector('.editable-item-name:focus');
+    if (activeEditable) {
+        activeEditable.blur();
     }
 });
 

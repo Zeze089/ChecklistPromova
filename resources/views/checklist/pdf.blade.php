@@ -204,7 +204,8 @@
     <!-- Header -->
     <div class="header">
         <div class="logo-title">
-            <img class="icone_promova" src="{{ asset('images/promova.jpg') }}" alt="" srcset="">
+            {{-- <img class="icone_promova" src="{{ asset('images/promova.jpg') }}" alt="" srcset=""> --}}
+            <img class="icone_promova" src="{{ public_path('images/promova.jpg') }}">
             <h1>Checklist de Produção</h1>
         </div>
         {{-- <p class="subtitle">Documento gerado automaticamente em {{ now()->format('d/m/Y H:i:s') }}</p> --}}
@@ -227,7 +228,13 @@
             </div>
             <div class="info-row">
                 <div class="info-label">Status:</div>
-                <div class="info-value"><span class="completion-badge">100% Completo</span></div>
+                <div class="info-value">
+                    @if($checklist->is_completed)
+                        <span class="completion-badge">Concluído</span>
+                    @else
+                        <span class="completion-badge" style="background: #f59e0b;">Em Andamento</span>
+                    @endif
+                </div>
             </div>
         
         </div>
